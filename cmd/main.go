@@ -53,13 +53,13 @@
 package main
 
 import (
-	"flaxxed/dist/profile"
 	"github.com/GoogleCloudPlatform/functions-framework-go/funcframework"
 	"log"
 	"os"
+	console "redis_client/dist/redis"
 )
 
-func profileMain() {
+func main() {
 
 	//ctx:=context.Background()
 	//var client *firestore.Client
@@ -94,7 +94,7 @@ func profileMain() {
 	//	}
 	//}
 	//fmt.Println(time.Now().Nanosecond() - start.Nanosecond())
-	funcframework.RegisterHTTPFunction("/profile", profile.ManageProfile)
+	funcframework.RegisterHTTPFunction("/redis", console.Execute)
 	//funcframework.RegisterHTTPFunction("/selection", selection.CalculateAndSave)
 
 	port := "8080"

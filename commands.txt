@@ -1,0 +1,6 @@
+sudo mkdir -p /Library/Developer/CommandLineTools/Library/PrivateFrameworks/LLDB.framework/Versions/A/Resources/
+sudo ln -s "/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Versions/A/Resources/debugserver" /Library/Developer/CommandLineTools/Library/PrivateFrameworks/LLDB.framework/Versions/A/Resources/debugserver
+remove history
+figure what's up with prompt and input
+figure how to read file
+auth

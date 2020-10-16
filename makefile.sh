@@ -1,8 +1,8 @@
 #!/bin/bash
-env_vars_options="flaxxed_ds_projectId=flaxxed,flaxxed_redis_url=172.23.144.3:6379,flaxxed_menu_pub_sub=flaxxed-menu"
+env_vars_options="redis_url=172.23.144.3:6379"
 
 curr_dir=$(pwd)
-project_name=flaxxed
+project_name=redis_client
 pkg_dir=$curr_dir/pkg
 dist_dir=$curr_dir/dist
 config_file=$curr_dir/configs/config.json
@@ -32,7 +32,7 @@ for mod in "${function_modules[@]}"; do
      [[ $m != "function" ]] && mkdir -p $dist_dir/$lower_func/vendor/$project_name/pkg/$m && cp -r $pkg_dir/$m/* $dist_dir/$lower_func/vendor/$project_name/pkg/$m
   done
 
-  [[ $deploy ]] && gcloud functions deploy $lower_func --entry-point $function_name --runtime go113 --trigger-${trigger} --allow-unauthenticated --timeout=60 --vpc-connector projects/flaxxed/locations/us-central1/connectors/redis-connector --memory=${memory}MB --set-env-vars $env_vars_options &
+  [[ $deploy ]] && gcloud functions deploy $lower_func --entry-point $function_name --runtime go113 --trigger-${trigger} --allow-unauthenticated --timeout=60 --memory=${memory}MB --set-env-vars $env_vars_options &
   cd $curr_dir
   #    mkdir -p $dist_dir/$lower_func/vendor/$project_name/internal
 done
