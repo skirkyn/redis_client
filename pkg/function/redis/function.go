@@ -64,7 +64,13 @@ func Execute(w http.ResponseWriter, r *http.Request) {
 
 func returnPage(w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	t, err := template.ParseGlob(os.Getenv("./vendor/redis_client/pkg/templates/console.html"))
+	f, err := ioutil.ReadFile(os.Getenv("web_template"))
+	if err!= nil{
+		log.Println("ERROR!!!", err)
+	}else {
+		log.Println("SUCCESS!!! File exists", string(f))
+	}
+	t, err := template.ParseFiles(os.Getenv("web_template"))
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Println(w, "Unable to load template")

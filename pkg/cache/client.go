@@ -9,12 +9,12 @@ import (
 )
 
 func NewClient(db int, url string) *redis.Client {
-	log.Println("connecting to the redis", url, "db", db)
+	log.Println("connecting to the files", url, "db", db)
 	cl := redis.NewClient(&redis.Options{
 		Addr: url,
 		DB:   db,
 	})
-	log.Println("connected to redis")
+	log.Println("connected to files")
 	return cl
 }
 

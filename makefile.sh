@@ -1,5 +1,5 @@
 #!/bin/bash
-env_vars_options="redis_url=172.23.144.3:6379"
+env_vars_options="redis_url=10.142.211.52:6379,web_template=./src/console/vendor/redis_client/pkg/templates/console.html"
 
 curr_dir=$(pwd)
 project_name=redis_client
@@ -10,7 +10,6 @@ deploy=$1
 [[ -d $dist_dir ]] && rm -rf $dist_dir || mkdir -p $dist_dir
 modules=($(ls $curr_dir/pkg))
 function_modules=($(ls $curr_dir/pkg/function))
-#function_modules=(menu)
 for mod in "${function_modules[@]}"; do
   lower_func=$(echo $mod | tr "[:upper:]" "[:lower:]")
   . $curr_dir/pkg/function/${mod}/.function
@@ -29,10 +28,9 @@ for mod in "${function_modules[@]}"; do
   rm go.sum
   echo $modules
   for m in "${modules[@]}"; do
-     [[ $m != "function" ]] && mkdir -p $dist_dir/$lower_func/vendor/$project_name/pkg/$m && cp -r $pkg_dir/$m/* $dist_dir/$lower_func/vendor/$project_name/pkg/$m
+    [[ $m != "function" ]] && mkdir -p $dist_dir/$lower_func/vendor/$project_name/pkg/$m && cp -r $pkg_dir/$m/* $dist_dir/$lower_func/vendor/$project_name/pkg/$m
   done
 
-  [[ $deploy ]] && gcloud functions deploy $lower_func --entry-point $function_name --runtime go113 --trigger-${trigger} --allow-unauthenticated --timeout=60 --memory=${memory}MB --set-env-vars $env_vars_options &
+  [[ $deploy ]] && gcloud functions deploy $lower_func --entry-point $function_name --runtime go113 --trigger-${trigger} --allow-unauthenticated --timeout=60 --memory=${memory}MB --vpc-connector projects/flaxxed/locations/us-central1/connectors/flaxxed-connector --set-env-vars $env_vars_options &
   cd $curr_dir
-  #    mkdir -p $dist_dir/$lower_func/vendor/$project_name/internal
 done

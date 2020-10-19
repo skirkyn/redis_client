@@ -94,7 +94,7 @@ func main() {
 	//	}
 	//}
 	//fmt.Println(time.Now().Nanosecond() - start.Nanosecond())
-	funcframework.RegisterHTTPFunction("/redis", console.Execute)
+	funcframework.RegisterHTTPFunction("/files", console.Execute)
 	//funcframework.RegisterHTTPFunction("/selection", selection.CalculateAndSave)
 
 	port := "8080"
